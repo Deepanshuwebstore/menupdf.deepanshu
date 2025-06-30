@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deepanshu Restaurant Menu</title>
+    <!-- Tailwind CSS CDN for utility-first styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts for 'Inter' typeface, providing a clean, modern look -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Base styles for the body: Sets default font, light background, and dark text for a modern light theme */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f9fafb; /* Very light gray background for a clean look */
+            line-height: 1.6; /* Improves text readability */
+            color: #333; /* Dark text for good contrast */
+        }
+
+        /* Header background: A soft, appealing gradient for the light theme */
+        .header-bg {
+            background: linear-gradient(135deg, #fce043, #fb8381); /* Warm, inviting gradient */
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+        }
+
+        /* Image container for each menu page */
+        .menu-image-container {
+            width: 100%;
+            /* Removed aspect-ratio here to allow image to dictate height */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #ffffff; /* White background for the image frame */
+            border-radius: 1.5rem; /* Rounded corners for the container */
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1); /* Soft shadow */
+            overflow: hidden; /* Ensures image doesn't overflow rounded corners */
+            transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth hover effect */
+        }
+        .menu-image-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 45px rgba(0,0,0,0.15);
+        }
+
+        /* Actual menu images inside their containers */
+        .menu-image {
+            width: 100%;
+            height: auto; /* Allow height to adjust naturally to maintain aspect ratio */
+            object-fit: cover; /* This will crop the image to fill the container if aspect ratios don't match, removing extra space */
+            flex-shrink: 0; /* Prevents image from shrinking */
+            border-radius: 12px; /* Slight rounded corners on the image itself */
+            margin: 0; /* Ensures no extra space (margins) around the image */
+            padding: 0; /* Ensures no extra space (padding) around the image */
+        }
+
+        /* Custom modal styles: For messages and alerts */
+        .modal {
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.6); /* Semi-transparent dark overlay */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        .modal.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        .modal-content {
+            background-color: #ffffff; /* White background for modal content */
+            color: #333; /* Dark text for modal content */
+            padding: 2.5rem;
+            border-radius: 1.5rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            max-width: 90%;
+            width: 500px;
+            text-align: center;
+            transform: translateY(-30px);
+            transition: transform 0.3s ease;
+        }
+        .modal.show .modal-content {
+            transform: translateY(0);
+        }
+        .close-button {
+            background-color: #f43f5e; /* Rose 500 (accent color) */
+            color: white;
+            padding: 0.75rem 1.75rem;
+            border: none;
+            border-radius: 0.75rem;
+            cursor: pointer;
+            margin-top: 1.5rem;
+            font-weight: 600;
+            transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+            box-shadow: 0 3px 8px rgba(244, 63, 94, 0.3);
+        }
+        .close-button:hover {
+            background-color: #e11d48; /* Rose 600 */
+            transform: translateY(-2px);
+            box-shadow: 0 5px 12px rgba(244, 63, 94, 0.4);
+        }
+
+        /* Adjusting text colors for light theme to ensure readability */
+        .text-gray-900 {
+            color: #1a202c; /* Very dark gray for main headings */
+        }
+        .text-gray-700 {
+            color: #4a5568; /* Dark gray for main paragraphs and captions */
+        }
+        .text-gray-600 {
+            color: #718096; /* Medium gray for secondary text */
+        }
+        .text-gray-800 { /* This class is on the body, but applied to strong tags etc */
+             color: #333; /* Dark text for good visibility */
+        }
+    </style>
+</head>
+<body class="flex flex-col min-h-screen text-gray-800">
+    <!-- Header Section: Displays the restaurant name and a tag line with a vibrant gradient background -->
+    <header class="header-bg py-8 sm:py-12">
+        <div class="container mx-auto px-4 text-center">
+            <h1 class="text-4xl sm:text-6xl font-extrabold text-white tracking-tight mb-2 drop-shadow-lg">Deepanshu Restaurant</h1>
+            <p class="text-white text-lg sm:text-2xl opacity-90 italic font-light">Where every meal is a celebration!</p>
+        </div>
+    </header>
+
+    <!-- Main Content Section: Contains the menu images and action buttons -->
+    <main class="flex-grow container mx-auto px-4 py-8"> <!-- Adjusted vertical padding -->
+        <!-- Menu Images Section: Displays both menu images side-by-side on larger screens, stacked on mobile -->
+        <section class="mb-8"> <!-- Adjusted bottom margin for consistency -->
+            <h2 class="text-3xl sm:text-4xl font-bold text-center text-gray-900 mb-6">Our Delicious Menu</h2> <!-- Adjusted bottom margin -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8"> <!-- Responsive grid for images -->
+                <!-- Menu Image 1 -->
+                <div class="menu-image-container">
+                    <img src="https://b.zmtcdn.com/data/menus/441/6441/eb3f6d72ac54f0348ec0f05f0be63636.jpeg"
+                         alt="Deepanshu Restaurant Menu Page 1"
+                         class="menu-image"
+                         onerror="this.onerror=null;this.src='https://placehold.co/600x800/e2e8f0/718096?text=Menu+Page+1+Unavailable';"
+                    >
+                </div>
+                <!-- Menu Image 2 -->
+                <div class="menu-image-container">
+                    <img src="https://b.zmtcdn.com/data/menus/441/6441/d7b3bb983081a753c5dcae7535fa7893.jpeg"
+                         alt="Deepanshu Restaurant Menu Page 2"
+                         class="menu-image"
+                         onerror="this.onerror=null;this.src='https://placehold.co/600x800/e2e8f0/718096?text=Menu+Page+2+Unavailable';"
+                    >
+                </div>
+            </div>
+            <!-- No dynamic caption needed here as both images are visible -->
+        </section>
+
+        <!-- Action Buttons Section: Contains buttons for downloading, sharing, and ordering -->
+        <section class="mt-12 mb-10 text-center">
+            <h2 class="text-2xl sm:text-3xl font-bold text-gray-900 mb-6">Explore & Order</h2>
+            <div class="flex flex-col sm:flex-row justify-center gap-6">
+                <button id="saveMenuBtn" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-full shadow-xl transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-blue-300 active:scale-95">
+                    Download Menu
+                </button>
+                <button id="shareMenuBtn" class="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-8 rounded-full shadow-xl transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-green-300 active:scale-95">
+                    Share Menu
+                </button>
+                <button id="orderWhatsappBtn" class="bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-8 rounded-full shadow-xl transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-purple-300 active:scale-95">
+                    Order on WhatsApp
+                </button>
+            </div>
+        </section>
+
+        <!-- Additional Information Section: Placeholder for more restaurant details -->
+        <section class="mt-12 text-center bg-white rounded-xl shadow-lg p-8">
+            <h2 class="text-2xl sm:text-3xl font-bold text-gray-900 mb-6">Additional Information</h2>
+            <p class="text-lg text-gray-700 leading-relaxed mb-4">
+                This section can be used for restaurant details like contact information,
+                opening hours, special offers, or directions.
+            </p>
+            <p class="text-md text-gray-600">
+                <strong class="text-gray-800">Contact:</strong>
+                +919910109626, +919268004475, +919953808031, +919312348116
+            </p>
+            <p class="text-md text-gray-600">
+                <strong class="text-gray-800">Email:</strong> deepanshurestaurant.helpgmail.com
+            </p>
+            <p class="text-md text-gray-600">
+                <strong class="text-gray-800">Hours:</strong> Mon-Sun: 10:00 AM - 11:00 PM
+            </p>
+            <p class="text-md text-gray-600 mt-2">
+                Available on: Zomato, Swiggy, Magicpin
+            </p>
+        </section>
+    </main>
+
+    <!-- Footer Section: Displays copyright and last update information -->
+    <footer class="bg-gray-800 text-white py-8 mt-auto">
+        <div class="container mx-auto px-4 text-center text-sm">
+            <p class="mb-1">&copy; <span id="currentYear"></span> Deepanshu Restaurant. All rights reserved.</p>
+            <p>Last menu update: 01-11-2024</p>
+        </div>
+    </footer>
+
+    <!-- Custom Modal for displaying messages to the user -->
+    <div id="customModal" class="modal">
+        <div class="modal-content">
+            <p id="modalMessage" class="text-xl font-semibold text-gray-800 mb-4"></p>
+            <button id="closeModalBtn" class="close-button">Close</button>
+        </div>
+    </div>
+
+    <script>
+        // Dynamically sets the current year in the footer
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+        // --- Custom Modal Functionality (for user feedback) ---
+        const customModal = document.getElementById('customModal');
+        const modalMessage = document.getElementById('modalMessage');
+        const closeModalBtn = document.getElementById('closeModalBtn');
+
+        /**
+         * Displays a custom modal with a given message.
+         * @param {string} message - The message to display in the modal.
+         */
+        function showCustomModal(message) {
+            modalMessage.textContent = message;
+            customModal.classList.add('show'); // Adds 'show' class to make modal visible
+        }
+
+        // Event listener to close the modal using the close button
+        closeModalBtn.addEventListener('click', () => {
+            customModal.classList.remove('show'); // Removes 'show' class to hide modal
+        });
+
+        // Event listener to close the modal when clicking outside its content
+        customModal.addEventListener('click', (event) => {
+            if (event.target === customModal) {
+                customModal.classList.remove('show');
+            }
+        });
+
+        // --- Download Menu Button functionality ---
+        document.getElementById('saveMenuBtn').addEventListener('click', () => {
+            let downloadsInitiated = 0;
+            // Select all menu images, now directly from the page
+            const menuImages = document.querySelectorAll('.menu-image');
+            menuImages.forEach((image, index) => {
+                const imageUrl = image.src;
+                const fileName = `deepanshu-menu-page-${index + 1}.jpeg`;
+
+                const a = document.createElement('a');
+                a.href = imageUrl;
+                a.download = fileName;
+                document.body.appendChild(a);
+
+                try {
+                    a.click();
+                    downloadsInitiated++;
+                } catch (e) {
+                    console.error("Download failed for image:", imageUrl, e);
+                } finally {
+                    document.body.removeChild(a);
+                }
+            });
+            if (downloadsInitiated > 0) {
+                showCustomModal(`Initiating download for ${downloadsInitiated} menu images. Please check your downloads folder.`);
+            } else {
+                showCustomModal("Could not initiate download for any images. This might happen if the images are from a different domain.");
+            }
+        });
+
+        // --- Share Menu Button functionality ---
+        document.getElementById('shareMenuBtn').addEventListener('click', async () => {
+            const menuUrl = window.location.href;
+            const shareTitle = "Deepanshu Restaurant Menu";
+            const shareText = "Check out the delicious menu from Deepanshu Restaurant!";
+
+            if (navigator.share) {
+                try {
+                    await navigator.share({
+                        title: shareTitle,
+                        text: shareText,
+                        url: menuUrl,
+                    });
+                } catch (error) {
+                    if (error.name === 'AbortError') {
+                        showCustomModal("Share cancelled.");
+                    } else {
+                        showCustomModal("Failed to share menu: " + error.message);
+                    }
+                }
+            } else {
+                try {
+                    const tempInput = document.createElement('input');
+                    tempInput.value = menuUrl;
+                    document.body.appendChild(tempInput);
+                    tempInput.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(tempInput);
+                    showCustomModal("Link copied to clipboard! You can paste it to share.");
+                } catch (err) {
+                    showCustomModal("Could not copy link to clipboard. Please copy it manually: " + menuUrl);
+                }
+            }
+        });
+
+        // --- Order on WhatsApp Button functionality ---
+        document.getElementById('orderWhatsappBtn').addEventListener('click', () => {
+            const phoneNumber = "919876543210"; // Replace with your restaurant's WhatsApp number
+            const message = `Hello, I'd like to place an order! You can view the menu here: ${window.location.href || 'www.menu.dr.com'}`;
+            const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+
+            window.open(whatsappUrl, '_blank');
+            showCustomModal("Navigating to WhatsApp chat. Please make sure WhatsApp is installed.");
+        });
+    </script>
+</body>
+</html>
