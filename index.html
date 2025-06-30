@@ -122,7 +122,7 @@
             display: inline-block;
             width: 1.5em; /* Increased icon size */
             height: 1.5em; /* Increased icon size */
-            vertical-align: middle; /* Align with text baseline */
+            flex-shrink: 0; /* Prevents icon from shrinking */
             margin-right: 0.75rem; /* More space between icon and text */
             fill: #60a5fa; /* A vibrant blue for icons */
         }
@@ -146,13 +146,35 @@
             display: flex;
             align-items: flex-start; /* Align items to the start for multi-line text */
             margin-bottom: 0.75rem; /* Spacing between info items */
-            font-size: 1rem; /* Slightly smaller text for info items */
+            font-size: 1rem; /* Adjusted text for info items to be slightly smaller for mobile */
             line-height: 1.4; /* Better line spacing for readability */
+            flex-wrap: wrap; /* Allow content to wrap to the next line on small screens */
         }
         .info-item strong {
             flex-shrink: 0; /* Prevents strong tag from shrinking */
             margin-right: 0.5rem; /* Space after strong tag */
             font-size: 1.05rem; /* Slightly smaller for bold text */
+        }
+        /* Specifically target text within info-item to ensure it wraps correctly */
+        .info-item span {
+            word-break: break-word; /* Ensure long words/numbers break to the next line */
+            overflow-wrap: break-word; /* Alternative for word wrapping */
+            hyphens: auto; /* Allow hyphenation if necessary for better word breaks */
+        }
+
+        /* On larger screens, center the text within each info item */
+        @media (min-width: 768px) {
+            .info-item {
+                justify-content: center; /* Center content on medium and larger screens */
+                text-align: center; /* Center text within the item */
+            }
+            .info-item strong {
+                margin-right: 0.25rem; /* Reduce margin on larger screens */
+            }
+            .info-item span {
+                text-align: left; /* Keep the actual text left-aligned within its space */
+                display: block; /* Ensures it takes full available width within flex item */
+            }
         }
     </style>
 </head>
@@ -216,12 +238,12 @@
                 <div class="info-item">
                     <svg class="info-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.32.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02L6.62 10.79z"/></svg>
                     <strong class="text-gray-800">Contact:</strong>
-                    <span class="break-all text-gray-700">+919910109626, +919268004475, +919953808031, +919312348116</span>
+                    <span class="text-gray-700">+919910109626, +919268004475, +919953808031, +919312348116</span>
                 </div>
                 <div class="info-item">
                     <svg class="info-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
                     <strong class="text-gray-800">Email:</strong>
-                    <span class="break-all text-gray-700">deepanshurestaurant.helpgmail.com</span>
+                    <span class="text-gray-700">deepanshurestaurant.helpgmail.com</span>
                 </div>
                 <div class="info-item">
                     <svg class="info-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm.9 15h-1.8v-6h1.8v6zm0-8h-1.8V7h1.8v2z"/></svg>
@@ -351,7 +373,7 @@
 
         // --- Order on WhatsApp Button functionality ---
         document.getElementById('orderWhatsappBtn').addEventListener('click', () => {
-            const phoneNumber = "919876543210"; // Replace with your restaurant's WhatsApp number
+            const phoneNumber = "+919910109626"; // Replace with your restaurant's WhatsApp number
             const message = `Hello, I'd like to place an order! You can view the menu here: ${window.location.href || 'www.menu.dr.com'}`;
             const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
 
