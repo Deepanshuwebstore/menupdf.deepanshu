@@ -26,7 +26,6 @@
         /* Image container for each menu page */
         .menu-image-container {
             width: 100%;
-            /* Removed aspect-ratio here to allow image to dictate height */
             display: flex;
             align-items: center;
             justify-content: center;
@@ -118,6 +117,43 @@
         .text-gray-800 { /* This class is on the body, but applied to strong tags etc */
              color: #333; /* Dark text for good visibility */
         }
+        /* Icon styling */
+        .info-icon {
+            display: inline-block;
+            width: 1.5em; /* Increased icon size */
+            height: 1.5em; /* Increased icon size */
+            vertical-align: middle; /* Align with text baseline */
+            margin-right: 0.75rem; /* More space between icon and text */
+            fill: #60a5fa; /* A vibrant blue for icons */
+        }
+
+        /* Additional Information Section Background and Animation */
+        .info-card-bg {
+            background: linear-gradient(160deg, #e0f2f7, #f5f5f5); /* Softer, slightly bluish-white gradient */
+            background-size: 200% 200%;
+            animation: soft-gradient 15s ease infinite alternate; /* Slower, gentler animation */
+            border-radius: 1.5rem;
+            box-shadow: 0 12px 35px rgba(0,0,0,0.12); /* Slightly stronger shadow for definition */
+            padding: 2.5rem; /* Consistent padding */
+        }
+
+        @keyframes soft-gradient {
+            0% {background-position: 0% 0%;}
+            100% {background-position: 100% 100%;}
+        }
+
+        .info-item {
+            display: flex;
+            align-items: flex-start; /* Align items to the start for multi-line text */
+            margin-bottom: 0.75rem; /* Spacing between info items */
+            font-size: 1rem; /* Slightly smaller text for info items */
+            line-height: 1.4; /* Better line spacing for readability */
+        }
+        .info-item strong {
+            flex-shrink: 0; /* Prevents strong tag from shrinking */
+            margin-right: 0.5rem; /* Space after strong tag */
+            font-size: 1.05rem; /* Slightly smaller for bold text */
+        }
     </style>
 </head>
 <body class="flex flex-col min-h-screen text-gray-800">
@@ -130,11 +166,11 @@
     </header>
 
     <!-- Main Content Section: Contains the menu images and action buttons -->
-    <main class="flex-grow container mx-auto px-4 py-8"> <!-- Adjusted vertical padding -->
+    <main class="flex-grow container mx-auto px-4 py-8">
         <!-- Menu Images Section: Displays both menu images side-by-side on larger screens, stacked on mobile -->
-        <section class="mb-8"> <!-- Adjusted bottom margin for consistency -->
-            <h2 class="text-3xl sm:text-4xl font-bold text-center text-gray-900 mb-6">Our Delicious Menu</h2> <!-- Adjusted bottom margin -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8"> <!-- Responsive grid for images -->
+        <section class="mb-8">
+            <h2 class="text-3xl sm:text-4xl font-bold text-center text-gray-900 mb-6">Our Delicious Menu</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <!-- Menu Image 1 -->
                 <div class="menu-image-container">
                     <img src="https://b.zmtcdn.com/data/menus/441/6441/eb3f6d72ac54f0348ec0f05f0be63636.jpeg"
@@ -152,7 +188,6 @@
                     >
                 </div>
             </div>
-            <!-- No dynamic caption needed here as both images are visible -->
         </section>
 
         <!-- Action Buttons Section: Contains buttons for downloading, sharing, and ordering -->
@@ -171,26 +206,34 @@
             </div>
         </section>
 
-        <!-- Additional Information Section: Placeholder for more restaurant details -->
-        <section class="mt-12 text-center bg-white rounded-xl shadow-lg p-8">
-            <h2 class="text-2xl sm:text-3xl font-bold text-gray-900 mb-6">Additional Information</h2>
-            <p class="text-lg text-gray-700 leading-relaxed mb-4">
-                This section can be used for restaurant details like contact information,
-                opening hours, special offers, or directions.
+        <!-- Additional Information Section: Details about the restaurant with enhanced styling and icons -->
+        <section class="mt-12 info-card-bg">
+            <h2 class="text-2xl sm:text-3xl font-bold text-gray-900 mb-6 text-center">Additional Information</h2>
+            <p class="text-lg text-gray-700 leading-relaxed mb-6 text-center">
+                Find out more about Deepanshu Restaurant below.
             </p>
-            <p class="text-md text-gray-600">
-                <strong class="text-gray-800">Contact:</strong>
-                +919910109626, +919268004475, +919953808031, +919312348116
-            </p>
-            <p class="text-md text-gray-600">
-                <strong class="text-gray-800">Email:</strong> deepanshurestaurant.helpgmail.com
-            </p>
-            <p class="text-md text-gray-600">
-                <strong class="text-gray-800">Hours:</strong> Mon-Sun: 10:00 AM - 11:00 PM
-            </p>
-            <p class="text-md text-gray-600 mt-2">
-                Available on: Zomato, Swiggy, Magicpin
-            </p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-y-4 gap-x-8 max-w-2xl mx-auto">
+                <div class="info-item">
+                    <svg class="info-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.32.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02L6.62 10.79z"/></svg>
+                    <strong class="text-gray-800">Contact:</strong>
+                    <span class="break-all text-gray-700">+919910109626, +919268004475, +919953808031, +919312348116</span>
+                </div>
+                <div class="info-item">
+                    <svg class="info-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                    <strong class="text-gray-800">Email:</strong>
+                    <span class="break-all text-gray-700">deepanshurestaurant.helpgmail.com</span>
+                </div>
+                <div class="info-item">
+                    <svg class="info-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm.9 15h-1.8v-6h1.8v6zm0-8h-1.8V7h1.8v2z"/></svg>
+                    <strong class="text-gray-800">Hours:</strong>
+                    <span class="text-gray-700">Mon-Sun: 10:00 AM - 11:00 PM</span>
+                </div>
+                <div class="info-item md:col-span-2">
+                    <svg class="info-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 3H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H3V5h18v14zM8 12c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0-7c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm8 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 7c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
+                    <strong class="text-gray-800">Available on:</strong>
+                    <span class="text-gray-700">Zomato, Swiggy, Magicpin</span>
+                </div>
+            </div>
         </section>
     </main>
 
@@ -291,6 +334,7 @@
                     }
                 }
             } else {
+                // Fallback for browsers that don't support Web Share API
                 try {
                     const tempInput = document.createElement('input');
                     tempInput.value = menuUrl;
@@ -298,7 +342,7 @@
                     tempInput.select();
                     document.execCommand('copy');
                     document.body.removeChild(tempInput);
-                    showCustomModal("Link copied to clipboard! You can paste it to share.");
+                    showCustomModal("Menu link copied to clipboard! You can paste it to share.");
                 } catch (err) {
                     showCustomModal("Could not copy link to clipboard. Please copy it manually: " + menuUrl);
                 }
